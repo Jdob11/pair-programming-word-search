@@ -3,13 +3,13 @@ const wordSearch = (letters, word) => {
     return undefined;
   }
   const horizontalJoin = letters.map(ls => ls.join(''));
-  for (l of horizontalJoin) {
+  for (let l of horizontalJoin) {
       if (l.includes(word)) return true
   }
 
  const verticalLetters = transpose(letters);
   const verticalJoin = verticalLetters.map(vls => vls.join(''));
-  for (vl of verticalJoin) {
+  for (let vl of verticalJoin) {
       if (vl.includes(word)) return true
   }
 
