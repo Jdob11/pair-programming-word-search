@@ -1,41 +1,36 @@
 const wordSearch = (letters, word) => { 
-  const horizontalJoin = letters.map(ls => ls.join(''))
+  if (letters.length === 0) {
+    return undefined;
+  }
+  const horizontalJoin = letters.map(ls => ls.join(''));
   for (l of horizontalJoin) {
       if (l.includes(word)) return true
-      if (reverseString(l).includes(word)) return true
-      // include a check to see if backwards
   }
-  // Flip this table similiar to matrix values on it's head
-  const swap = verticalSwapper(letters);
-  const verticalJoin = swap.map(ls => ls.join(''))
-  for (l of verticalJoin) {
-      if (l.includes(word)) return true
-      if (reverseString(l).includes(word)) return true
-      // include a check to see if backwards
+
+ const verticalLetters = transpose(letters);
+  const verticalJoin = verticalLetters.map(vls => vls.join(''));
+  for (vl of verticalJoin) {
+      if (vl.includes(word)) return true
   }
+
   return false;
-
-
 }
 
 module.exports = wordSearch
 
-// One to do the logic of vertical to horizontal swap
-const verticalSwapper = (array) => {
-let swappedArray = [];
-for (const keyArray in array) {
-  for (const keyValue in array[keyArray]) {
-    if(!swappedArray[keyValue]) {
-      swappedArray[keyValue] = [];
+const transpose = function (matrix) {
+  //create array to hold the final transposed arrays
+  const transposedArray = [];
+  //loop through the first array
+  for (let row = 0; row < matrix[0].length; row++) {
+    //create a temporary array to hold the transposed output
+    const tempArray = [];
+    //loop through each array element push opposite coordinate into tempArray
+    for (let column = 0; column < matrix.length; column++) {
+      tempArray.push(matrix[column][row]);
     }
-    swappedArray[keyValue][keyArray] = array[keyArray][keyValue];
+    //push each new tempArray into the final transposedArray
+    transposedArray.push(tempArray);
   }
-}
-return swappedArray;
-}
-
-// One to reverse the current string Stretch
-const reverseString = (string) => {
-reverseArray = string.split("");
-return reverseArray.reverse().join("")
+  return transposedArray;
 };
